@@ -45,7 +45,7 @@ function App() {
       <div style={{ width: "100%", height: 600 + workaround, marginBottom: 24 }}>
         <Chart data={fakeData} axes={axes} ></Chart>
       </div>
-      <button onClick={() => { postData(20 + ((Math.random() % 2 === 0 ? -1 : 1) * Math.random() * 7) ) }}>Add value</button>
+      {/* <button onClick={() => { postData(20 + ((Math.random() % 2 === 0 ? -1 : 1) * Math.random() * 7) ) }}>Add value</button> */}
     </div>
   );
 }

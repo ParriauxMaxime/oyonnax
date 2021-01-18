@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-const endpoint = "http://localhost:3000/data"
+const endpoint = "http://127.0.0.1:3000/data"
 
 export const useData = () => {
   const [data, setData] = useState([]);
