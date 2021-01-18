@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -15,6 +16,7 @@ const Record = mongoose.model('Record', recordSchema);
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello world');
@@ -32,6 +34,13 @@ app.post('/data', (req, res) => {
     res.status(201).end();
   });
 });
+
+app.post('/reset', (req, res) => {
+  Record.deleteMany({}).then(() => {
+    res.status(203).end();
+  });
+});
+
 mongoose.connect('mongodb://localhost/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
