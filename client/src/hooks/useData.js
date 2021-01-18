@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
 
-const endpoint = "http://127.0.0.1:3000/data"
+
+const hostname = window.INTERNAL_HOSTNAME;
+const endpoint = `http://${hostname}:3000/data`
 
 export const useData = () => {
   const [data, setData] = useState([]);
