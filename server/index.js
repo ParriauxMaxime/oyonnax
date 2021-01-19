@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { time } = require('console');
 
 const config = {
   port: 3000,
@@ -43,7 +44,18 @@ app.get('/data', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
-  const record = new Record({ timestamp: req.body.timestamp, temperature: req.body.temperature });
+  let { timestamp } = req.body;
+  const { temperature } = req.body;
+
+  if (!timestamp) {
+    timestamp = Date.now();
+  }
+
+  if (!temperature) {
+    res.status(400).send('temperature is required');
+  }
+
+  const record = new Record({ timestamp, temperature });
   record.save().then(() => {
     res.status(201).end();
   });
