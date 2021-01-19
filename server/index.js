@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const config = {
   port: 3000,
+  prodIp: '18.205.246.58',
 };
 
 const isProd = () => process.env.NODE_ENV === 'production';
@@ -27,7 +28,7 @@ let cache = null;
 app.get('/', (req, res) => {
   if (!cache) {
     cache = fs.readFileSync(path.join(__dirname, '..', 'client', 'build', 'index.html'), 'utf-8');
-    cache = cache.replace('__INTERNAL_HOSTNAME__', `"${isProd() ? '18.205.246.58' : 'localhost'}"`);
+    cache = cache.replace('__INTERNAL_HOSTNAME__', `"${isProd() ? config.prodIp : 'localhost'}"`);
   }
 
   return res.send(cache);

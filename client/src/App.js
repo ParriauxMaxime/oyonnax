@@ -3,9 +3,9 @@ import { Chart } from 'react-charts'
 import { useData } from "./hooks/useData";
 
 function App() {
-  const {data, postData} = useData();
+  const {data} = useData();
 
-  const fakeData = React.useMemo(
+  const chartData = React.useMemo(
     () => [
       {
         label: 'Temperature',
@@ -27,11 +27,12 @@ function App() {
   const [workaround, setWorkaround] = useState(0)
   useLayoutEffect(() => {
     const interval = setInterval(() => setWorkaround(workaround === 1 ? 0 : 1), 500)
-    setTimeout(() => clearInterval(interval), 2000);
-  }, [workaround])
+    setTimeout(() => clearInterval(interval) , 2000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
-    <div style={{ height: "100%", padding: 8 }}>
+    <div style={{ width: "100%", padding: 8 }}>
       <style dangerouslySetInnerHTML={{
         __html: `
         html,
@@ -40,12 +41,19 @@ function App() {
           width: 100%;
           margin: 0;
         }
+
+        #root {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
       `}}>
        </style>
-      <div style={{ width: "100%", height: 600 + workaround, marginBottom: 24 }}>
-        <Chart data={fakeData} axes={axes} ></Chart>
+      <div style={{ width: "100%", height: `calc(65vh + ${workaround}px)` }}>
+        <Chart data={chartData} axes={axes} ></Chart>
       </div>
-      {/* <button onClick={() => { postData(20 + ((Math.random() % 2 === 0 ? -1 : 1) * Math.random() * 7) ) }}>Add value</button> */}
     </div>
   );
 }
