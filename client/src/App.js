@@ -1,9 +1,9 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useEffect, useState } from 'react'
 import { Chart } from 'react-charts'
 import { useData } from "./hooks/useData";
 
 function App() {
-  const {data} = useData();
+  const {data, refresh} = useData();
 
   const chartData = React.useMemo(
     () => [
@@ -22,6 +22,15 @@ function App() {
     ],
     []
   )
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refresh();
+    }, 5000)
+    return () => {
+      clearInterval(interval)
+    };
+  }, [])
 
   // need to refresh size, dunno why 
   const [workaround, setWorkaround] = useState(0)

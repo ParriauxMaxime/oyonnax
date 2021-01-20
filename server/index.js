@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { time } = require('console');
 
 const config = {
   port: 3000,
@@ -29,7 +28,7 @@ let cache = null;
 app.get('/', (req, res) => {
   if (!cache) {
     cache = fs.readFileSync(path.join(__dirname, '..', 'client', 'build', 'index.html'), 'utf-8');
-    cache = cache.replace('__INTERNAL_HOSTNAME__', `"${isProd() ? config.prodIp : 'localhost'}"`);
+    cache = cache.replace('__INTERNAL_HOSTNAME__', `"${isProd() ? config.prodIp : 'localhost:3000'}"`);
   }
 
   return res.send(cache);

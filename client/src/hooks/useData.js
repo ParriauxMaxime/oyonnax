@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
 
-const hostname = window.INTERNAL_HOSTNAME;
-const endpoint = `http://${hostname}:3000/data`
+const hostname = window.INTERNAL_HOSTNAME || 'localhost:3000';
+const endpoint = `http://${hostname}/data`
 
 export const useData = () => {
   const [data, setData] = useState([]);
@@ -34,9 +34,13 @@ export const useData = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refresh, loading])
 
+  const refreshFunction = useCallback(() => {
+    setRefresh(true);
+  }, [])
+
   if (!loading && refresh) {
     fetchData();
   }
 
-  return {data, postData};
+  return {data, postData, refresh: refreshFunction};
 }
